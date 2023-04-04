@@ -1,8 +1,6 @@
 export function Container(props) {
   return (
-    <div
-      className={`w-108 mx-auto px-16 py-6 ${props.white ? "bg-white" : null}`}
-    >
+    <div className="max-w-5xl w-full mx-auto px-6 py-8 max-h-[17.5rem]">
       {props.children}
     </div>
   );
