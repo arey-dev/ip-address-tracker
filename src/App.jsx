@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAPI } from "./hooks/useAPI";
 import { Map } from "./components";
 import { SearchBar } from "./components";
 import { Heading } from "./components";
@@ -7,6 +8,7 @@ import { IPGeolocation } from "./components";
 
 function App() {
   const [IPAddress, setIPAddress] = useState("");
+  const geo = useAPI();
 
   function handleValueChange(e) {
     setIPAddress(e.target.value);
@@ -27,7 +29,7 @@ function App() {
               onValueChange={handleValueChange}
               onFormSubmit={handleSubmit}
             />
-            <IPGeolocation />
+            {geo && <IPGeolocation geoData={geo} />}
           </Container>
         </section>
         <Map />

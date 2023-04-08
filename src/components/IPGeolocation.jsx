@@ -10,26 +10,40 @@ function Divider() {
 }
 
 function GeolocationData({ heading, data }) {
+  let text = data;
+
+  if (heading === "location") {
+    text = data[0] + " " + data[1];
+  }
+
+  if (heading === "timezone") {
+    text = "UTC " + data;
+  }
   return (
     <div className="px-7">
       <h2 className=" relative bottom-2 text-gray-dark font-bold text-base tracking-wide uppercase">
         {heading}
       </h2>
       <p className=" relative top-2 font-bold text-gray-darker text-2xl">
-        {data}
+        {text}
       </p>
     </div>
   );
 }
 
-export function IPGeolocation() {
+export function IPGeolocation({ geoData }) {
+  const { ip, location, isp } = geoData;
+
   return (
     <>
       <section className="relative z-50 max-w-5xl w-full mx-auto py-8 bg-white rounded-xl grid grid-cols-4 divide-x-2 shadow-lg group">
-        <GeolocationData heading="ip address" data="192.212.174.101" />
-        <GeolocationData heading="location" data="Brooklyn, NY 1001" />
-        <GeolocationData heading="timezone" data="UTC-05:00" />
-        <GeolocationData heading="isp" data="SpaceX Starlink" />
+        <GeolocationData heading="ip address" data={ip} />
+        <GeolocationData
+          heading="location"
+          data={[location.city, location.postalCode]}
+        />
+        <GeolocationData heading="timezone" data={location.timezone} />
+        <GeolocationData heading="isp" data={isp} />
       </section>
     </>
   );

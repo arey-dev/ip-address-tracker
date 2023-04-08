@@ -1,6 +1,10 @@
-export function SearchBar({onValueChange, onFormSubmit, IPAddress}) {
+export function SearchBar({ onValueChange, onFormSubmit, IPAddress }) {
   return (
-    <form role="search" className="flex mx-auto max-w-lg mb-14 w-full" onSubmit={onFormSubmit}>
+    <form
+      role="search"
+      className="flex mx-auto max-w-lg mb-14 w-full"
+      onSubmit={onFormSubmit}
+    >
       <p className="w-full">
         <input
           className="py-2.5 px-5 w-full rounded-l-xl text-xl"
@@ -22,7 +26,7 @@ function SearchButton() {
   return (
     <button className="bg-gray-darker px-5 rounded-r-xl">
       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14">
-        <path fill="none" stroke="#FFF" stroke-width="3" d="M2 1l6 6-6 6" />
+        <path fill="none" stroke="#FFF" strokeWidth="3" d="M2 1l6 6-6 6" />
       </svg>
     </button>
   );
