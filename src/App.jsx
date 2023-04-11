@@ -1,21 +1,42 @@
 import { useState, useEffect } from "react";
-import { useAPI } from "./hooks/useAPI";
 import { Map } from "./components";
 import { SearchBar } from "./components";
 import { Heading } from "./components";
 import { Container } from "./components";
 import { IPGeolocation } from "./components";
+import { fetchGeo } from "./services/api";
+import { Loader } from "./components/Loader";
 
 function App() {
   const [IPAddress, setIPAddress] = useState("");
-  const geo = useAPI();
+  const [geo, setGeo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleValueChange(e) {
-    setIPAddress(e.target.value);
-  }
+  useEffect(() => {
+    async function fetch(val) {
+      setIsLoading(true);
+      const result = await fetchGeo(val);
+
+      if (!ignore) {
+        setGeo(result);
+        setIsLoading(false);
+      }
+    }
+
+    let ignore = false;
+    setGeo(null);
+    fetch(IPAddress);
+
+    return () => {
+      ignore = true;
+    };
+  }, [IPAddress]);
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const { value } = e.target.elements.q;
+    setIPAddress(value);
   }
 
   return (
@@ -24,12 +45,10 @@ function App() {
         <section className="bg-[url('./assets/pattern-bg-desktop.png')]">
           <Container>
             <Heading />
-            <SearchBar
-              IPAddress={IPAddress}
-              onValueChange={handleValueChange}
-              onFormSubmit={handleSubmit}
-            />
-            {geo && <IPGeolocation geoData={geo} />}
+            <SearchBar IPAddress={IPAddress} onFormSubmit={handleSubmit} />
+            <section className="relative z-50 max-w-5xl w-full mx-auto py-8 bg-white rounded-xl shadow-lg ">
+              {isLoading ? <Loader/> : geo && <IPGeolocation geoData={geo} />}
+            </section>
           </Container>
         </section>
         <Map />

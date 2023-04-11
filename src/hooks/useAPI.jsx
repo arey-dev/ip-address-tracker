@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchGeo } from "../services/api";
 
-export function useAPI() {
+export function useAPI(input) {
   const [geo, setGeo] = useState(null);
+  const [inputVal, setInputVal] = useState(input);
 
   useEffect(() => {
-    async function fetch() {
-      const result = await fetchGeo();
+    async function fetch(val) {
+      const result = await fetchGeo(val);
 
       if (!ignore) {
         setGeo(result);
@@ -14,13 +15,14 @@ export function useAPI() {
     }
 
     let ignore = false;
-    fetch();
-    console.log(geo)
+    setGeo(null);
+    setInputVal(input);
+    fetch(inputVal);
 
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [inputVal]);
 
   return geo;
 }

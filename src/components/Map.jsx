@@ -6,8 +6,7 @@ import { Popup } from "react-leaflet/Popup";
 export function Map() {
   return (
     <MapContainer
-      className="absolute top-[17.5rem] z-40 bottom-0
-      left-0 right-0 outline-none"
+      className="absolute top-[17.5rem] z-40 bottom-0 left-0 right-0 outline-none"
       center={[51.505, -0.09]}
       zoom={13}
       scrollWheelZoom={false}

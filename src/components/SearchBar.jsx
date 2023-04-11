@@ -1,4 +1,4 @@
-export function SearchBar({ onValueChange, onFormSubmit, IPAddress }) {
+export function SearchBar({ onFormSubmit }) {
   return (
     <form
       role="search"
@@ -11,10 +11,8 @@ export function SearchBar({ onValueChange, onFormSubmit, IPAddress }) {
           id="q"
           type="search"
           name="q"
-          value={IPAddress}
           aria-label="Search IP address"
           placeholder="Search for any IP address or domain"
-          onChange={onValueChange}
         />
       </p>
       <SearchButton />

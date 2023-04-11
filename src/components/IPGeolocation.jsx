@@ -35,16 +35,14 @@ export function IPGeolocation({ geoData }) {
   const { ip, location, isp } = geoData;
 
   return (
-    <>
-      <section className="relative z-50 max-w-5xl w-full mx-auto py-8 bg-white rounded-xl grid grid-cols-4 divide-x-2 shadow-lg group">
-        <GeolocationData heading="ip address" data={ip} />
-        <GeolocationData
-          heading="location"
-          data={[location.city, location.postalCode]}
-        />
-        <GeolocationData heading="timezone" data={location.timezone} />
-        <GeolocationData heading="isp" data={isp} />
-      </section>
-    </>
+    <div className="  grid grid-cols-4 divide-x-2 group">
+      <GeolocationData heading="ip address" data={ip} />
+      <GeolocationData
+        heading="location"
+        data={[location.city, location.postalCode]}
+      />
+      <GeolocationData heading="timezone" data={location.timezone} />
+      <GeolocationData heading="isp" data={isp} />
+    </div>
   );
 }
