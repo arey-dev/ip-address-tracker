@@ -1,11 +1,11 @@
 export async function fetchGeo(inputVal) {
-  const KEY = "at_zisTv1cpXnJL20kkXFleBakt8AMYG";
+  const API_KEY = "ad31405ff37e4c0984ca79e828210f21";
 
   let url;
   if (!inputVal) {
-    url = `https://geo.ipify.org/api/v2/country,city?apiKey=${KEY}`;
+    url = `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`;
   } else {
-    url = `https://geo.ipify.org/api/v2/country,city?apiKey=${KEY}&ipAddress=${inputVal}`;
+    url = `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}&ip=${inputVal}`;
   }
 
   try {

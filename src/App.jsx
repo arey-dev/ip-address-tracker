@@ -25,19 +25,18 @@ function App() {
 
     let ignore = false;
     setGeo(null);
-    fetch(IPAddress);
+    // fetch(IPAddress);
+    console.log(geo);
 
     return () => {
       ignore = true;
     };
   }, [IPAddress]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const { value } = e.target.elements.q;
+  function setIP(value) {
     setIPAddress(value);
   }
+
 
   return (
     <>
@@ -45,13 +44,13 @@ function App() {
         <section className="bg-[url('./assets/pattern-bg-desktop.png')]">
           <Container>
             <Heading />
-            <SearchBar IPAddress={IPAddress} onFormSubmit={handleSubmit} />
-            <section className="relative z-50 max-w-5xl w-full mx-auto py-8 bg-white rounded-xl shadow-lg ">
-              {isLoading ? <Loader/> : geo && <IPGeolocation geoData={geo} />}
+            <SearchBar IPAddress={IPAddress} onFormSubmit={setIP} />
+            <section className="relative z-50 w-full mx-auto py-8 bg-white rounded-xl shadow-lg">
+              {isLoading ? <Loader /> : geo && <IPGeolocation geoData={geo} />}
             </section>
           </Container>
         </section>
-        <Map />
+        {geo && <Map position={[geo.latitude, geo.longitude]} />}
       </main>
     </>
   );
