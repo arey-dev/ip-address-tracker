@@ -30,7 +30,7 @@ function App() {
     }
 
     setGeo(null);
-    fetchGeoData(IPAddress);
+    // fetchGeoData(IPAddress);
     console.log(geo);
 
     return () => controller.abort();
