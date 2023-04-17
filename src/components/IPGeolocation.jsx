@@ -10,11 +10,11 @@ function GeolocationData({ heading, data }) {
     text = "UTC " + offset + ":00";
   }
   return (
-    <div className="px-7 text-center md:text-start">
-      <h2 className=" relative md:bottom-2 text-gray-dark font-bold font-display text-sm md:text-lg tracking-widest md:tracking-wider uppercase">
+    <div className="px-5 text-center md:text-start">
+      <h2 className=" relative md:bottom-2 text-gray-dark font-bold font-display text-xs sm:text-sm md:text-base font-medium tracking-widest md:tracking-wider uppercase">
         {heading}
       </h2>
-      <p className=" relative md:top-2 font-bold text-gray-darker text-xl">
+      <p className="relative md:top-1 font-bold font-body text-gray-darker text-base sm:text-lg md:text-xl lg:text-2xl">
         {text}
       </p>
     </div>

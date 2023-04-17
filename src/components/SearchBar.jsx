@@ -24,11 +24,11 @@ export function SearchBar({ onFormSubmit }) {
 
   return (
     <>
-      <section className="mb-14 mx-auto max-w-lg w-full relative">
+      <section className="mb-6 md:mb-14 mx-auto max-w-lg w-full relative">
         <form role="search" className="flex" onSubmit={handleSubmit}>
           <p className="w-full">
             <input
-              className="py-2.5 px-5 w-full rounded-l-xl text-xl"
+              className="py-2.5 px-4 w-full rounded-l-xl text-xl placeholder:text-sm sm:placeholder:text-xl font-body"
               id="q"
               type="search"
               name="q"

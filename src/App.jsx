@@ -7,6 +7,8 @@ import { IPGeolocation } from "./components";
 import { fetchGeo } from "./services/api";
 import { Loader } from "./components/Loader";
 
+
+
 function App() {
   const [IPAddress, setIPAddress] = useState("");
   const [geo, setGeo] = useState(null);
@@ -30,7 +32,7 @@ function App() {
     }
 
     setGeo(null);
-    // fetchGeoData(IPAddress);
+    fetchGeoData(IPAddress);
     console.log(geo);
 
     return () => controller.abort();
@@ -47,7 +49,7 @@ function App() {
           <Container>
             <Heading />
             <SearchBar IPAddress={IPAddress} onFormSubmit={setIP} />
-            <section className="relative z-50 w-full mx-auto py-8 bg-white rounded-xl shadow-lg">
+            <section className="relative z-50 w-full mx-auto py-5 sm:py-8 bg-white rounded-xl shadow-lg">
               {errText ? (
                 <p>errText</p>
               ) : isLoading ? (
