@@ -1,28 +1,28 @@
-import { useState, useEffect } from "react";
-import { fetchGeo } from "../services/api";
-
 export function useAPI(input) {
   const [geo, setGeo] = useState(null);
   const [inputVal, setInputVal] = useState(input);
+  const [errText, setErrText] = useState("");
 
   useEffect(() => {
-    async function fetch(val) {
-      const result = await fetchGeo(val);
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      if (!ignore) {
+    async function fetchGeoData(val) {
+      try {
+        const result = await fetchGeo(val, { signal });
         setGeo(result);
+        setErrText("");
+      } catch (error) {
+        setErrText(`Error fetching data: ${error.message}`);
       }
     }
 
-    let ignore = false;
     setGeo(null);
     setInputVal(input);
-    fetch(inputVal);
+    fetchGeoData(inputVal);
 
-    return () => {
-      ignore = true;
-    };
-  }, [inputVal]);
+    return () => controller.abort();
+  }, [inputVal, input]);
 
-  return geo;
+  return { geo, errText };
 }

@@ -10,33 +10,35 @@ import { Loader } from "./components/Loader";
 function App() {
   const [IPAddress, setIPAddress] = useState("");
   const [geo, setGeo] = useState(null);
+  const [errText, setErrText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function fetch(val) {
-      setIsLoading(true);
-      const result = await fetchGeo(val);
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      if (!ignore) {
+    async function fetchGeoData(val) {
+      try {
+        setIsLoading(true);
+        const result = await fetchGeo(val, { signal });
         setGeo(result);
+        setErrText("");
         setIsLoading(false);
+      } catch (error) {
+        setErrText(`Error fetching data: ${error.message}`);
       }
     }
 
-    let ignore = false;
     setGeo(null);
-    // fetch(IPAddress);
+    fetchGeoData(IPAddress);
     console.log(geo);
 
-    return () => {
-      ignore = true;
-    };
+    return () => controller.abort();
   }, [IPAddress]);
 
   function setIP(value) {
     setIPAddress(value);
   }
-
 
   return (
     <>
@@ -46,7 +48,13 @@ function App() {
             <Heading />
             <SearchBar IPAddress={IPAddress} onFormSubmit={setIP} />
             <section className="relative z-50 w-full mx-auto py-8 bg-white rounded-xl shadow-lg">
-              {isLoading ? <Loader /> : geo && <IPGeolocation geoData={geo} />}
+              {errText ? (
+                <p>errText</p>
+              ) : isLoading ? (
+                <Loader />
+              ) : (
+                geo && <IPGeolocation geoData={geo} />
+              )}
             </section>
           </Container>
         </section>

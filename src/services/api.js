@@ -8,11 +8,12 @@ export async function fetchGeo(inputVal) {
     url = `https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}&ip=${inputVal}`;
   }
 
-  try {
-    const response = await fetch(url);
+  const response = await fetch(url);
+
+  if (response.ok) {
     const result = await response.json();
     return result;
-  } catch (error) {
-    console.log(error);
   }
+
+  throw new Error(response.status);
 }
