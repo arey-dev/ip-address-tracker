@@ -7,8 +7,6 @@ import { IPGeolocation } from "./components";
 import { fetchGeo } from "./services/api";
 import { Loader } from "./components/Loader";
 
-
-
 function App() {
   const [IPAddress, setIPAddress] = useState("");
   const [geo, setGeo] = useState(null);
@@ -51,7 +49,7 @@ function App() {
             <SearchBar IPAddress={IPAddress} onFormSubmit={setIP} />
             <section className="relative z-50 w-full mx-auto py-5 sm:py-8 bg-white rounded-xl shadow-lg">
               {errText ? (
-                <p>errText</p>
+                <p>{errText}</p>
               ) : isLoading ? (
                 <Loader />
               ) : (
