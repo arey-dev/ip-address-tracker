@@ -6,25 +6,26 @@ import { Container } from "./components";
 import { IPGeolocation } from "./components";
 import { fetchGeo } from "./services/api";
 import { Loader } from "./components/Loader";
+import { GeoData } from "./components";
 
 function App() {
-  const [IPAddress, setIPAddress] = useState("");
-  const [geo, setGeo] = useState(null);
-  const [errText, setErrText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [IPAddress, setIPAddress] = useState<string>("");
+  const [geo, setGeo] = useState<GeoData | null>(null);
+  const [errText, setErrText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    async function fetchGeoData(val) {
+    async function fetchGeoData(val: string) {
       try {
         setIsLoading(true);
         const result = await fetchGeo(val, { signal });
         setGeo(result);
         setErrText("");
         setIsLoading(false);
-      } catch (error) {
+      } catch (error: any) {
         setErrText(`Error fetching data: ${error.message}`);
       }
     }
@@ -36,7 +37,7 @@ function App() {
     return () => controller.abort();
   }, [IPAddress]);
 
-  function setIP(value) {
+  function setIP(value: string) {
     setIPAddress(value);
   }
 
