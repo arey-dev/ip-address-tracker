@@ -1,11 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export function SearchBar({ onFormSubmit }) {
-  const [error, setError] = useState("");
+type SearchBarProps = {
+  onFormSubmit: (value: string) => void;
+};
 
-  function handleSubmit(e) {
+export function SearchBar({ onFormSubmit }: SearchBarProps) {
+  const [error, setError] = useState<string>("");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { value } = e.target.elements.q;
+    const inputElement = e.currentTarget.querySelector(
+      'input[name="q"]'
+    ) as HTMLInputElement;
+
+    if (!inputElement) {
+      return;
+    }
+
+    const value = inputElement.value;
 
     if (!isValiIP(value)) {
       setError("Please enter a valid IP Address.");
@@ -16,7 +28,7 @@ export function SearchBar({ onFormSubmit }) {
     onFormSubmit(value);
   }
 
-  function isValiIP(ip) {
+  function isValiIP(ip: string) {
     const pattern =
       /^([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])$/;
     return pattern.test(ip);
@@ -38,7 +50,11 @@ export function SearchBar({ onFormSubmit }) {
           </p>
           <SearchButton />
         </form>
-        {error && <p className="text-orange-400 font-medium absolute -bottom-7">{error}</p>}
+        {error && (
+          <p className="text-orange-400 font-medium absolute -bottom-7">
+            {error}
+          </p>
+        )}
       </section>
     </>
   );
