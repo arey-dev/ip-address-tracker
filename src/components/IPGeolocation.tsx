@@ -62,11 +62,10 @@ function formatTimezone(data: string | string[]) {
   return "UTC " + (parseInt(offset) > 0 ? "+" + offset : offset) + ":00";
 }
 
-
 // Define the mapping of heading to formatter functions.
 const headingFormatters: {
-  // this line denotes that the object headingFormatters has string keys 
-  // and has a object values that are functions that takes an argument 
+  // this line denotes that the object headingFormatters has string keys
+  // and has a object values that are functions that takes an argument
   // 'data' of type 'string' or 'string[]'
   [key: string]: (data: string | string[]) => string;
 } = {
