@@ -1,5 +1,5 @@
 // define the shape and property types of geoData
-type GeoData = {
+export type GeoData = {
   ip: string;
   city: string;
   state_prov: string;
@@ -8,6 +8,8 @@ type GeoData = {
   time_zone: {
     offset: string;
   };
+  latitude: string,
+  longitude: string,
 };
 
 // this makes sure that the object passed to the
