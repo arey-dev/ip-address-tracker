@@ -51,18 +51,23 @@ export function IPGeolocation({ geoData }: IPGeolocationProps) {
   );
 }
 
-// utilities
+// formats the location data
 function formatLocation(data: string | string[]) {
   return data[0] + ", " + data[1] + " " + data[2];
 }
 
+// formats the timezone data
 function formatTimezone(data: string | string[]) {
   const offset = Array.isArray(data) ? data[0] : data;
   return "UTC " + (parseInt(offset) > 0 ? "+" + offset : offset) + ":00";
 }
 
 
+// Define the mapping of heading to formatter functions.
 const headingFormatters: {
+  // this line denotes that the object headingFormatters has string keys 
+  // and has a object values that are functions that takes an argument 
+  // 'data' of type 'string' or 'string[]'
   [key: string]: (data: string | string[]) => string;
 } = {
   location: formatLocation,
