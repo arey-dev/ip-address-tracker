@@ -4,7 +4,11 @@ import { Marker } from "react-leaflet/Marker";
 import { Popup } from "react-leaflet/Popup";
 import { ZoomControl } from "react-leaflet/ZoomControl";
 
-export function Map({ position }) {
+type PositionProp = {
+  position: string[]
+}
+
+export function Map({ position }: PositionProp) {
   return (
     <MapContainer
       className="absolute top-[18.75rem] sm:top-[17.5rem] z-40 bottom-0 left-0 right-0 outline-none"
