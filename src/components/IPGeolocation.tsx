@@ -1,3 +1,26 @@
+// define the shape and property types of geoData
+type GeoData = {
+  ip: string;
+  city: string;
+  state_prov: string;
+  zipcode: string;
+  isp: string;
+  time_zone: {
+    offset: string;
+  };
+};
+
+// this makes sure that the object passed to the
+// IPGeolocation component has the same shape and type 
+// as GeoData type
+type IPGeolocationProps = {
+  geoData: GeoData
+}
+
+
+// define types for GeolocationData
+
+
 function GeolocationData({ heading, data }) {
   const formatter = headingFormatters[heading] || ((data) => data);
   const text = formatter(data);
@@ -14,9 +37,9 @@ function GeolocationData({ heading, data }) {
   );
 }
 
-export function IPGeolocation({
-  geoData: { ip, city, state_prov, zipcode, isp, time_zone },
-}) {
+export function IPGeolocation({ geoData }: IPGeolocationProps ) {
+  const { ip, city, state_prov, zipcode, isp, time_zone } = geoData;
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-0 divide-x-2 group">
       <GeolocationData heading="ip address" data={ip} />
