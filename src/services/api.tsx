@@ -1,4 +1,4 @@
-export async function fetchGeo(inputVal: string) {
+export async function fetchGeo(inputVal: string, signal: object) {
   const API_KEY = "ad31405ff37e4c0984ca79e828210f21";
 
   let url;
