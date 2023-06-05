@@ -1,4 +1,4 @@
-export async function fetchGeo(inputVal) {
+export async function fetchGeo(inputVal: string) {
   const API_KEY = "ad31405ff37e4c0984ca79e828210f21";
 
   let url;
@@ -15,5 +15,5 @@ export async function fetchGeo(inputVal) {
     return result;
   }
 
-  throw new Error(response.status);
+  throw new Error(response.status + "");
 }
