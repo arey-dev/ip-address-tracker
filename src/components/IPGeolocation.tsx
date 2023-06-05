@@ -11,17 +11,19 @@ type GeoData = {
 };
 
 // this makes sure that the object passed to the
-// IPGeolocation component has the same shape and type 
+// IPGeolocation component has the same shape and type
 // as GeoData type
 type IPGeolocationProps = {
-  geoData: GeoData
-}
-
+  geoData: GeoData;
+};
 
 // define types for GeolocationData
+type GeolocationDataProps = {
+  heading: string;
+  data: string | string[];
+};
 
-
-function GeolocationData({ heading, data }) {
+function GeolocationData({ heading, data }: GeolocationDataProps) {
   const formatter = headingFormatters[heading] || ((data) => data);
   const text = formatter(data);
 
@@ -37,9 +39,8 @@ function GeolocationData({ heading, data }) {
   );
 }
 
-export function IPGeolocation({ geoData }: IPGeolocationProps ) {
+export function IPGeolocation({ geoData }: IPGeolocationProps) {
   const { ip, city, state_prov, zipcode, isp, time_zone } = geoData;
-  
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-0 divide-x-2 group">
       <GeolocationData heading="ip address" data={ip} />
@@ -51,16 +52,19 @@ export function IPGeolocation({ geoData }: IPGeolocationProps ) {
 }
 
 // utilities
-function formatLocation(data) {
+function formatLocation(data: string | string[]) {
   return data[0] + ", " + data[1] + " " + data[2];
 }
 
-function formatTimezone(data) {
-  const offset = parseInt(data) > 0 ? "+" + data : data;
-  return "UTC " + offset + ":00";
+function formatTimezone(data: string | string[]) {
+  const offset = Array.isArray(data) ? data[0] : data;
+  return "UTC " + (parseInt(offset) > 0 ? "+" + offset : offset) + ":00";
 }
 
-const headingFormatters = {
+
+const headingFormatters: {
+  [key: string]: (data: string | string[]) => string;
+} = {
   location: formatLocation,
   timezone: formatTimezone,
 };
