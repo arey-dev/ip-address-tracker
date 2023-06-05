@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 
 type SearchBarProps = {
+  IPAddress: string;
   onFormSubmit: (value: string) => void;
 };
 
-export function SearchBar({ onFormSubmit }: SearchBarProps) {
+export function SearchBar({ IPAddress, onFormSubmit }: SearchBarProps) {
   const [error, setError] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
