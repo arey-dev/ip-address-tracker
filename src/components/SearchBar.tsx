@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 
 type SearchBarProps = {
   onFormSubmit: (value: string) => void;
@@ -6,20 +6,13 @@ type SearchBarProps = {
 
 export function SearchBar({ onFormSubmit }: SearchBarProps) {
   const [error, setError] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const inputElement = e.currentTarget.querySelector(
-      'input[name="q"]'
-    ) as HTMLInputElement;
+    const value = inputRef.current?.value;
 
-    if (!inputElement) {
-      return;
-    }
-
-    const value = inputElement.value;
-
-    if (!isValiIP(value)) {
+    if (!value || !isValidIP(value)) {
       setError("Please enter a valid IP Address.");
       return;
     }
@@ -28,35 +21,34 @@ export function SearchBar({ onFormSubmit }: SearchBarProps) {
     onFormSubmit(value);
   }
 
-  function isValiIP(ip: string) {
+  function isValidIP(ip: string) {
     const pattern =
       /^([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])\.([01]?\d{1,2}|2[0-4]\d|25[0-5])$/;
     return pattern.test(ip);
   }
 
   return (
-    <>
-      <section className="mb-6 md:mb-14 mx-auto max-w-lg w-full relative">
-        <form role="search" className="flex" onSubmit={handleSubmit}>
-          <p className="w-full">
-            <input
-              className="py-2.5 px-4 w-full rounded-l-xl text-xl placeholder:text-sm sm:placeholder:text-xl font-body"
-              id="q"
-              type="search"
-              name="q"
-              aria-label="Search IP address"
-              placeholder="Search for any IP address or domain"
-            />
-          </p>
-          <SearchButton />
-        </form>
-        {error && (
-          <p className="text-orange-400 font-medium absolute -bottom-7">
-            {error}
-          </p>
-        )}
-      </section>
-    </>
+    <section className="mb-6 md:mb-14 mx-auto max-w-lg w-full relative">
+      <form role="search" className="flex" onSubmit={handleSubmit}>
+        <p className="w-full">
+          <input
+            ref={inputRef}
+            className="py-2.5 px-4 w-full rounded-l-xl text-xl placeholder:text-sm sm:placeholder:text-xl font-body"
+            id="q"
+            type="search"
+            name="q"
+            aria-label="Search IP address"
+            placeholder="Search for any IP address or domain"
+          />
+        </p>
+        <SearchButton />
+      </form>
+      {error && (
+        <p className="text-orange-400 font-medium absolute -bottom-7">
+          {error}
+        </p>
+      )}
+    </section>
   );
 }
 
